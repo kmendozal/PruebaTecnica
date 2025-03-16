@@ -5,96 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
-    <!-- MDBootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <style>
         body {
-            background-color: hsl(0, 0%, 96%);
+            background-color: hsl(0, 0.00%, 100.00%);
         }
 
         .jumbotron {
             padding: 4rem 2rem;
         }
 
-        .btn-social {
-            color: #fff;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            margin: 5px;
+        .login-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
         }
 
-        .btn-facebook { background-color: #3b5998; }
-        .btn-google { background-color: #dd4b39; }
-        .btn-twitter { background-color: #1da1f2; }
-        .btn-github { background-color: #333; }
+        /* Estilos para la pantalla de carga */
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            z-index: 9999;
+        }
 
-        .btn-social:hover {
-            opacity: 0.8;
+        /* Animación de la bolita de carga */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #fff;
+            border-top: 5px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
+
 <body>
 
-<section class="jumbotron">
-    <div class="container">
-        <div class="row align-items-center">
-            <!-- Texto de la izquierda -->
-            <div class="col-lg-6">
-                <h1 class="fw-bold display-4">
-                    Bienvenidos <br />
-                    <span class="text-primary">Iniciar Sesion</span>
-                </h1>
-                <p class="text-secondary">
-                    Por favor, ingrese sus credenciales para continuar con la evaluación técnica.
-                </p>
-            </div>
-
-            <!-- Formulario de registro -->
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body px-md-5 py-5">
-                        <form>
-                            <!-- Email -->
-                            <div class="form-outline mb-3">
-                                <input type="email" id="email" class="form-control" required />
-                                <label class="form-label" for="email">Correo Electrónico</label>
-                            </div>
-
-                            <!-- Password -->
-                            <div class="form-outline mb-3">
-                                <input type="password" id="password" class="form-control" required />
-                                <label class="form-label" for="password">Contraseña</label>
-                            </div>
-
-                            <!-- Checkbox -->
-                            <div class="form-check d-flex justify-content-center mb-3">
-                                <input class="form-check-input me-2" type="checkbox" id="subscribe" checked />
-                                <label class="form-check-label" for="subscribe">
-                                    Confirmo que deseo iniciar sesión y que mis credenciales son correctas.
-                                </label>
-                            </div>
-
-                            <!-- Botón de registro -->
-                            <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
-                                Ingresar
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div> <!-- Fin formulario -->
-        </div>
+    <!-- Overlay de carga -->
+    <div id="loading" class="loading-container">
+        <div class="spinner"></div>
     </div>
-</section>
 
-<!-- MDBootstrap JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+    <section class="jumbotron">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center">
+                    <img src="img/fondo2.jpg" alt="Login Image" class="login-image">
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body px-md-5 py-5">
+                            <h1 class="fw-bold text-center mb-3">Bienvenidos</h1>
+                            <p class="text-secondary text-center">Ingrese sus credenciales para continuar con la evaluación técnica.</p>
+                            <form id="loginForm">
+                                <div class="form-outline mb-3">
+                                    <input type="email" id="email" class="form-control" required />
+                                    <label class="form-label" for="email">Correo Electrónico</label>
+                                </div>
+
+                                <div class="form-outline mb-3">
+                                    <input type="password" id="contrasena" class="form-control" minlength="6" required />
+                                    <label class="form-label" for="contrasena">Contraseña</label>
+                                </div>
+
+                                <div class="form-check d-flex justify-content-center mb-3">
+                                    <input class="form-check-input me-2" type="checkbox" id="confirmar" required checked />
+                                    <label class="form-check-label" for="confirmar">
+                                        Confirmo que deseo iniciar sesión y que mis credenciales son correctas.
+                                    </label>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                                    Ingresar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+    <script src="frontend/js/login.js"></script>
+
 </body>
 </html>
